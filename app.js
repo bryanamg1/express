@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import loggerMiddlewar from './middlewares/logger.js';
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -18,6 +19,7 @@ dotenv.config();
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(loggerMiddlewar);
 
 
 const PORT = process.env.PORT || 3000;
