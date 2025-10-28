@@ -5,6 +5,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import loggerMiddlewar from './middlewares/logger.js';
+import errorHandler from './middlewares/errorhandler.js'; 
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -20,6 +21,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(loggerMiddlewar);
+app.use(errorHandler);
 
 
 const PORT = process.env.PORT || 3000;
@@ -203,6 +205,9 @@ app.delete('/users/:id', (req, res) => {
   });
 });
 
+app.get('/error', (req, res, next) => {
+next(new Error('This is a test error'));
+});
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);
 });
